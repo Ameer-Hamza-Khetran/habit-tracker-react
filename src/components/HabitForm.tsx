@@ -1,4 +1,4 @@
-import { Button } from "./button"
+import { Button } from "./Button"
 
 function HabitForm() {
   return <form className="flex gap-2">

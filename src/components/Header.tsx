@@ -1,4 +1,4 @@
-import { Button } from "./button.tsx"
+import { Button } from "./Button"
 
 function Header() {
   return <header className="flex items-center justify-between">
