@@ -1,20 +1,10 @@
+import { useHabits, type Habit } from "../context/HabitProvider";
 import { Button } from "./Button";
 import { startOfWeek, eachDayOfInterval, endOfWeek, format, isFuture, isSameDay, subDays} from 'date-fns'
 
-export type Habit = {
-        id: string,
-        name: string,
-        completions: Date[]
-    }
 
-type HabitListProps = {
-    habits: Habit[],
-    deleteHabit: (id: string) => void,
-    toggleHabit: (id: string, date: Date) => void
-}
-
-function HabitList({ habits, deleteHabit, toggleHabit }: HabitListProps) {
-    
+function HabitList() {
+    const { habits } = useHabits()
     if (habits.length === 0) {
         return <p className="text-center text-zinc-500 py-12">
             No habits yet. Add one above to get started.
@@ -23,21 +13,20 @@ function HabitList({ habits, deleteHabit, toggleHabit }: HabitListProps) {
     return <div className="flex flex-col gap-3">
         {habits.map((habit) => (
             <HabitItem 
-                deleteHabit={deleteHabit} 
                 key={habit.id} 
                 habit={habit}
-                toggleHabit={toggleHabit} 
             />
         ))}
     </div>
 }
 type HabitItemProps = {
-    habit: Habit,
-    deleteHabit: (id: string) => void,
-    toggleHabit: (id: string, date: Date) => void
+    habit: Habit
 }
 
-function HabitItem({habit, deleteHabit, toggleHabit}: HabitItemProps) {
+function HabitItem({ habit }: HabitItemProps) {
+
+    const { deleteHabit, toggleHabit } = useHabits()
+
     const visibleDates = eachDayOfInterval(
         {
             start: startOfWeek(new Date(), { weekStartsOn: 1 }), 
